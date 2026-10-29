@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Satisfactory 1.0 Alt Reseptit</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent: #f2c142;
+            --text: #e0e0e0;
+            --border: #333;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text); margin: 0; padding: 15px; padding-bottom: 50px; }
+        h1 { font-size: 1.3rem; text-align: center; color: var(--accent); margin-top: 5px; margin-bottom: 15px; }
+        
+        .sticky-header { position: sticky; top: 0; background: var(--bg-color); padding-bottom: 10px; z-index: 100; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
+        
+        .filters { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .filters::-webkit-scrollbar { display: none; }
+        .filter-btn { padding: 6px 14px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 20px; font-size: 0.9rem; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+        .filter-btn.active { background: var(--accent); color: #000; font-weight: bold; border-color: var(--accent); }
+        
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #444; background: #222; color: #fff; font-size: 16px; box-sizing: border-box; outline: none; }
+        input[type="text"]:focus { border-color: var(--accent); }
+        
+        .recipe-card { background: var(--card-bg); border-radius: 10px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--border); }
+        .recipe-title { font-size: 1.1rem; font-weight: bold; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        
+        .tiers { display: flex; justify-content: space-between; gap: 10px; }
+        .tier-box { display: flex; flex-direction: column; align-items: center; flex: 1; background: #252525; padding: 8px 5px; border-radius: 8px; }
+        .tier-label { font-size: 0.7rem; color: #aaa; margin-bottom: 4px; text-transform: uppercase; }
+        .tier-value { font-weight: bold; font-size: 1.1rem; padding: 3px 14px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        
+        .recipe-details { background: #181818; padding: 10px; border-radius: 6px; font-size: 0.85rem; line-height: 1.4; }
+        .detail-row { margin-bottom: 6px; }
+        .detail-row:last-child { margin-bottom: 0; }
+        .detail-label { color: var(--accent); font-weight: bold; }
+        
+        .tier-S { background: #ff4c4c; color: #fff; }
+        .tier-A { background: #ff9800; color: #fff; }
+        .tier-B { background: #ffc107; color: #222; }
+        .tier-C { background: #8bc34a; color: #222; }
+        .tier-D { background: #03a9f4; color: #fff; }
+        .tier-F { background: #9c27b0; color: #fff; }
+        .tier-Unknown { background: #444; color: #bbb; }
+        
+        .stats { text-align: center; font-size: 0.8rem; color: #888; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="sticky-header">
+        <h1>MAM Skanneri - Alt Reseptit</h1>
+        <div class="filters" id="tierFilters">
+            <button class="filter-btn active" data-filter="All">Kaikki</button>
+            <button class="filter-btn" data-filter="S">S Tier</button>
+            <button class="filter-btn" data-filter="A">A Tier</button>
+            <button class="filter-btn" data-filter="B">B Tier</button>
+            <button class="filter-btn" data-filter="C">C Tier</button>
+            <button class="filter-btn" data-filter="D">D Tier</button>
+            <button class="filter-btn" data-filter="F">F Tier</button>
+        </div>
+        <input type="text" id="searchInput" placeholder="🔍 Etsi (esim. screw, frame)...">
+    </div>
+    <div class="stats" id="stats">Näytetään kaikki 107 reseptiä</div>
+    <div id="recipeList">
+        
+    <div class="recipe-card" data-name="heavy encased frame" data-text-tier="S" data-comm-tier="S">
+        <div class="recipe-title">Alternate: Heavy Encased Frame</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Modular Frame, Encased Industrial Beam, Steel Pipe, Concrete</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Poistaa kokonaan ruuvien tarpeen HMF-ketjussa. Säästää valtavasti koneita ja tilaa.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="copper alloy ingot" data-text-tier="S" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Copper Alloy Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Copper Ore, Iron Ore (Foundry)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Massiivinen kuparituotto ilman vesiputkia ja jalostamoita. Erittäin helppo skaalata.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="pure aluminum ingot" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Pure Aluminum Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Aluminum Scrap (Smelter)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Ohittaa Silican tarpeen sulatusvaiheessa. Helpottaa alumiiniketjua huomattavasti.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="oil-based diamonds" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Oil-Based Diamonds</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="dark matter trap" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Dark Matter Trap</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="heavy flexible frame" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Heavy Flexible Frame</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="sloppy alumina" data-text-tier="S" data-comm-tier="S">
+        <div class="recipe-title">Alternate: Sloppy Alumina</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Bauxite, Water</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Poistaa Silica-sivutuotteen ensimmäisestä alumiinivaiheesta. Tekee nesteiden hallinnasta idioottivarman.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="insulated crystal oscillator" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Insulated Crystal Oscillator</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="silicon circuit board" data-text-tier="S" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Silicon Circuit Board</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="crystal computer" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Crystal Computer</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="heat-fused frame" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Heat-Fused Frame</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="uranium fuel unit" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Uranium Fuel Unit</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="caterium circuit board" data-text-tier="S" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Caterium Circuit Board</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="super-state computer" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Super-State Computer</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="turbo diamonds" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Turbo Diamonds</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="caterium computer" data-text-tier="A" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Caterium Computer</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="electrode aluminum scrap" data-text-tier="A" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Electrode Aluminum Scrap</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Alumina Solution, Petroleum Coke</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Korvaa kivihiilen öljyjätteellä. Kätevä, jos alumiinitehdas on öljyn lähellä.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="diluted fuel" data-text-tier="A" data-comm-tier="S">
+        <div class="recipe-title">Alternate: Diluted Fuel</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Heavy Oil Residue, Water (Blender / Packager)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Kaksinkertaistaa öljystä saatavan polttoaineen määrän. Välttämätön isoille polttovoimaloille.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="turbo pressure motor" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Turbo Pressure Motor</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="rubber concrete" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Rubber Concrete</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Limestone, Rubber</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tuottaa paljon betonia, mutta kuluttaa arvokasta kumia.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="plastic ai limiter" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Plastic AI Limiter</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="steel screw" data-text-tier="A" data-comm-tier="S">
+        <div class="recipe-title">Alternate: Steel Screw</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Steel Beam (Constructor)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tuottaa mielettömän määrän ruuveja yhdestä koneesta. Yksinkertaistaa Phase 2-3 tehtaita rajusti.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="rigor motor" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Rigor Motor</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="steel rod" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Steel Rod</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="fine concrete" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Fine Concrete</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="steeled frame" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Steeled Frame</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="aluminum beam" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Aluminum Beam</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="aluminum rod" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Aluminum Rod</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="turbo electric motor" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Turbo Electric Motor</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="electric motor" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Electric Motor</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="wet concrete" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Wet Concrete</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Limestone, Water (Refinery)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Muuttaa ylimääräisen veden isoksi määräksi betonia. Säästää kalkkikivikaivoksia.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="automated speed wiring" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Automated Speed Wiring</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="coke steel ingot" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Coke Steel Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="infused uranium cell" data-text-tier="A" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Infused Uranium Cell</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="silicon high-speed connector" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Silicon High-Speed Connector</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="radio control system" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Radio Control System</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="solid steel ingot" data-text-tier="B" data-comm-tier="S">
+        <div class="recipe-title">Alternate: Solid Steel Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Iron Ingot, Coal (Foundry)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Nostaa teräksen tuotannon tehokkuutta 50% verrattuna perusreseptiin. Paras teräsresepti.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="heat exchanger" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Heat Exchanger</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="recycled plastic" data-text-tier="B" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Recycled Plastic</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Rubber, Fuel (Refinery)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Yhdessä Recycled Rubberin kanssa moninkertaistaa muovin ja kumin kokonaistuoton öljylähteestä.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="coated iron plate" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Coated Iron Plate</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="adhered iron plate" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Adhered Iron Plate</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="stitched iron plate" data-text-tier="B" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Stitched Iron Plate</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Iron Plate, Wire (Assembler)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Korvaa ruuvit langalla (Wire). Lanka on helpompi siirtää hihnalla suurissa määrin.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="insulated cable" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Insulated Cable</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="coated cable" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Coated Cable</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="fused wire" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Fused Wire</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="plastic smart plating" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Plastic Smart Plating</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="copper rotor" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Copper Rotor</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="steel cast plate" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Steel Cast Plate</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="nitro rocket fuel" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Nitro Rocket Fuel</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="steamed copper sheet" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Steamed Copper Sheet</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="oc supercomputer" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: OC Supercomputer</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="steel rotor" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Steel Rotor</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="tempered caterium ingot" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Tempered Caterium Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="cooling device" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Cooling Device</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="pure quartz crystal" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Pure Quartz Crystal</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="electromagnetic connection rod" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Electromagnetic Connection Rod</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="quickwire cable" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Quickwire Cable</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="caterium wire" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Caterium Wire</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="quickwire stator" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Quickwire Stator</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="bolted frame" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Bolted Frame</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="bolted iron plate" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Bolted Iron Plate</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="fine black powder" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Fine Black Powder</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="heavy oil residue" data-text-tier="B" data-comm-tier="S">
+        <div class="recipe-title">Alternate: Heavy Oil Residue</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Crude Oil (Refinery)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Antaa eniten pohjaöljyä muovin ja kumin monistamiseen (Recycled-ketjut) tai polttoaineeseen.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="flexible framework" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Flexible Framework</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="turbo heavy fuel" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Turbo Heavy Fuel</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="cast screw" data-text-tier="B" data-comm-tier="S">
+        <div class="recipe-title">Alternate: Cast Screw</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-S">S</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Iron Ingot (Constructor)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Ohittaa Iron Rod -vaiheen täysin. Täydellinen pelin alkupuolella, puolittaa rakennusmäärän.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="iron alloy ingot" data-text-tier="B" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Iron Alloy Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="polymer resin" data-text-tier="B" data-comm-tier="B">
+        <div class="recipe-title">Alternate: Polymer Resin</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="automated miner" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Automated Miner</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="pure iron ingot" data-text-tier="C" data-comm-tier="C">
+        <div class="recipe-title">Alternate: Pure Iron Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="leached iron ingot" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Leached Iron ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="iron wire" data-text-tier="C" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Iron Wire</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Iron Ingot (Constructor)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Sallii kuparin ohittamisen kokonaan varhaisissa rakennuksissa (esim. Stators, Rotors).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="coated iron canister" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Coated Iron Canister</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="classic battery" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Classic Battery</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="steel canister" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Steel Canister</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="fused quickwire" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Fused Quickwire</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="cheap silica" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Cheap Silica</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="molded beam" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Molded Beam</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="alclad casing" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Alclad Casing</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="basic iron ingot" data-text-tier="C" data-comm-tier="F">
+        <div class="recipe-title">Alternate: Basic Iron Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="distilled silica" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Distilled Silica</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="fused quartz crystal" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Fused Quartz Crystal</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="molded steel pipe" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Molded Steel Pipe</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="leached caterium ingot" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Leached Caterium Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="turbo blend fuel" data-text-tier="C" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Turbo Blend Fuel</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="electrode circuit board" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Electrode Circuit Board</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="pure caterium ingot" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Pure Caterium Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="encased industrial pipe" data-text-tier="C" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Encased Industrial Pipe</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="recycled rubber" data-text-tier="C" data-comm-tier="A">
+        <div class="recipe-title">Alternate: Recycled Rubber</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-C">C</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-A">A</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Plastic, Fuel (Refinery)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Toinen puolisko huipputehokkaasta öljynjalostus-loopista.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="compacted steel ingot" data-text-tier="D" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Compacted Steel Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-D">D</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="quartz purification" data-text-tier="D" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Quartz Purification</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-D">D</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="plutonium fuel unit" data-text-tier="D" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Plutonium Fuel Unit</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-D">D</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="pink diamonds" data-text-tier="D" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Pink Diamonds</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-D">D</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="instant plutonium cell" data-text-tier="D" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Instant Plutonium Cell</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-D">D</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="iron pipe" data-text-tier="D" data-comm-tier="D">
+        <div class="recipe-title">Alternate: Iron Pipe</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-D">D</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-D">D</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="instant scrap" data-text-tier="F" data-comm-tier="B">
+        <div class="recipe-title">Alternate: Instant Scrap</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-B">B</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Bauxite, Coal, Sulfuric Acid, Water</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Nopea tuotto paperilla, mutta logistinen painajainen (F-tier vaivan kannalta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="pure copper ingot" data-text-tier="F" data-comm-tier="F">
+        <div class="recipe-title">Alternate: Pure Copper Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Copper Ore, Water (Refinery)</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Antaa paljon kuparia, MUTTA vaatii massiivisesti tilaa, putkia ja sähköä (F-tier vaivan kannalta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="fertile uranium" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Fertile Uranium</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="radio connection unit" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Radio Connection Unit</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="cloudy diamonds" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Cloudy Diamonds</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="dark-ion fuel" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Dark-Ion Fuel</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="dark matter crystallization" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Dark Matter Crystallization</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="petroleum diamonds" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Petroleum Diamonds</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="leached copper ingot" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Leached Copper Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="tempered copper ingot" data-text-tier="F" data-comm-tier="?">
+        <div class="recipe-title">Alternate: Tempered Copper Ingot</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-Unknown">Vaihtelee</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Katso pelistä / Wiki</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Tilannekohtainen hyöty (riippuu tuotantolinjan rakenteesta).</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="biocoal" data-text-tier="F" data-comm-tier="F">
+        <div class="recipe-title">Alternate: Biocoal</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Biomass</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Täysin hyödytön endgame-vaiheessa, älä ota ellet ole aivan pulassa.</div>
+        </div>
+    </div>
+    
+    <div class="recipe-card" data-name="charcoal" data-text-tier="F" data-comm-tier="F">
+        <div class="recipe-title">Alternate: Charcoal</div>
+        <div class="tiers">
+            <div class="tier-box">
+                <span class="tier-label">Tekstin arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+            <div class="tier-box">
+                <span class="tier-label">Yhteisön arvio</span>
+                <span class="tier-value tier-F">F</span>
+            </div>
+        </div>
+        <div class="recipe-details">
+            <div class="detail-row"><span class="detail-label">Vaatii:</span> Wood</div>
+            <div class="detail-row"><span class="detail-label">Etu:</span> Hyödytön. Vie vain kovalevyn skannauspaikan.</div>
+        </div>
+    </div>
+    
+    </div>
+    
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.recipe-card');
+        const stats = document.getElementById('stats');
+        
+        let currentFilter = 'All';
+
+        function updateList() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                const textTier = card.getAttribute('data-text-tier');
+                
+                const matchesSearch = name.includes(searchTerm);
+                const matchesFilter = currentFilter === 'All' || textTier === currentFilter;
+                
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            stats.textContent = `Näytetään ${visibleCount} reseptiä`;
+        }
+
+        searchInput.addEventListener('input', updateList);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.getAttribute('data-filter');
+                updateList();
+            });
+        });
+    </script>
+</body>
+</html>
